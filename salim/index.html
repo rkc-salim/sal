@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+        .calculator {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #display {
+            width: 100%;
+            height: 40px;
+            font-size: 24px;
+            font-weight: bold;
+            text-align: right;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        button {
+            width: 60px;
+            height: 40px;
+            font-size: 18px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button id="clear">C</button>
+            <button id="backspace">&lt;</button>
+            <button id="equals">=</button>
+            <button id="add">+</button>
+            <button id="subtract">-</button>
+            <button id="multiply">*</button>
+            <button id="divide">/</button>
+            <button id="zero">0</button>
+            <button id="one">1</button>
+            <button id="two">2</button>
+            <button id="three">3</button>
+            <button id="four">4</button>
+            <button id="five">5</button>
+            <button id="six">6</button>
+            <button id="seven">7</button>
+            <button id="eight">8</button>
+            <button id="nine">9</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+        const clearButton = document.getElementById('clear');
+        const backspaceButton = document.getElementById('backspace');
+        const equalsButton = document.getElementById('equals');
+        const addButton = document.getElementById('add');
+        const subtractButton = document.getElementById('subtract');
+        const multiplyButton = document.getElementById('multiply');
+        const divideButton = document.getElementById('divide');
+        const numberButtons = document.querySelectorAll('.buttons button:not(#clear, #backspace, #equals)');
+
+        let currentNumber = '';
+        let previousNumber = '';
+        let operation = '';
+
+        numberButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                currentNumber += button.textContent;
+                display.value = currentNumber;
+            });
+        });
+
+        addButton.addEventListener('click', () => {
+            previousNumber = currentNumber;
+            currentNumber = '';
+            operation = 'add';
+        });
+
+        subtractButton.addEventListener('click', () => {
+            previousNumber = currentNumber;
+            currentNumber = '';
+            operation = 'subtract';
+        });
+
+        multiplyButton.addEventListener('click', () => {
+            previousNumber = currentNumber;
+            currentNumber = '';
+            operation = 'multiply';
+        });
+
+        divideButton.addEventListener('click', () => {
+            previousNumber = currentNumber;
+            currentNumber = '';
+            operation = 'divide';
+        });
+
+        equalsButton.addEventListener('click', () => {
+            const result = calculateResult();
+            display.value = result;
+            currentNumber = result;
+            previousNumber = '';
+            operation = '';
+        });
+
+        clearButton.addEventListener('click', () => {
+            currentNumber = '';
+            previousNumber = '';
+            operation = '';
+            display.value = '';
+        });
+
+        backspaceButton.addEventListener('click', () => {
+            currentNumber = currentNumber.slice(0, -1);
+            display.value = currentNumber;
+        });
+
+        
